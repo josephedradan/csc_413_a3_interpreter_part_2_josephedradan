@@ -12,3 +12,4 @@ def test():
 
 print(i)
 print(test())
+print(i)

@@ -12,8 +12,8 @@ output of autorun.py
 
 ```
 Running file: advance-for-statement-iteration-return.txt
-Python 3.8.4:                      ['111', '0', '0']
-Java Pseudo Python Interpreter:    ['111', '0', '0']
+Python 3.8.4:                      ['111', '0', '0', '111']
+Java Pseudo Python Interpreter:    ['111', '0', '0', '111']
 Correct
 
 Running file: arithmetic.txt
