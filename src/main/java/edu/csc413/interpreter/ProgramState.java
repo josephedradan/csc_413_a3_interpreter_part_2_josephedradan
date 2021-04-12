@@ -1,6 +1,7 @@
 package edu.csc413.interpreter;
 
 import edu.csc413.interpreter.statement.Statement;
+
 import java.util.*;
 
 /**
@@ -9,18 +10,36 @@ import java.util.*;
  * or set those values.
  */
 public class ProgramState {
-    private Stack<HashMap<String, Integer>> callStack;
 
-    // TODO: Implement. Add any other instance variables you need.
+
+    private final Stack<HashMap<String, Integer>> callStack;
+
+    /*
+    WILL NOT SUPPORT FUNCTIONS WITH THE SAME NAME DEFINED IN DIFFERENT SCOPES MEANING FUNCTION NAMES ARE UNIQUE.
+    THIS ALSO MEANS THAT FUNCTIONS WITH THE SAME NAME WILL BE OVERWRITTEN UNLIKE PYTHON.
+    ALSO WE CAN'T MODIFY THE VARS FROM PRIOR SCOPES FROM THE CURRENT SCOPE
+    (e.g. implicit vars defined in the scopes prior to the current scope).
+    */
+    private final HashMap<String, List<Statement>> functionStatements;
+    private final HashMap<String, List<String>> functionParameters;
+
+    private int tempReturnValue;
+    private boolean returnValueBoolean = false; // By default it is already false
+
 
     public ProgramState() {
         callStack = new Stack<>();
+
+        functionStatements = new HashMap<>();
+        functionParameters = new HashMap<>();
+
         addCallFrame();
 
-        // TODO: Implement. Initialize any instance variables you added.
     }
 
-    /** Returns the integer value associated with the specified variable name in the current call frame. */
+    /**
+     * Returns the integer value associated with the specified variable name in the current call frame.
+     */
     public int getVariable(String variable) {
         HashMap<String, Integer> topCallFrame = callStack.peek();
         if (!topCallFrame.containsKey(variable)) {
@@ -29,12 +48,16 @@ public class ProgramState {
         return topCallFrame.get(variable);
     }
 
-    /** Sets the value for the specified variable name to the specified value in the current call frame. */
+    /**
+     * Sets the value for the specified variable name to the specified value in the current call frame.
+     */
     public void setVariable(String variable, int value) {
         callStack.peek().put(variable, value);
     }
 
-    /** Adds a new, empty call frame to the top of the call stack, making it the new current call frame. */
+    /**
+     * Adds a new, empty call frame to the top of the call stack, making it the new current call frame.
+     */
     public void addCallFrame() {
         callStack.push(new HashMap<>());
     }
@@ -54,40 +77,52 @@ public class ProgramState {
      * the function name.
      */
     public void registerFunction(String functionName, List<String> parameterNames, List<Statement> functionStatements) {
-        // TODO: Implement.
+        this.functionStatements.put(functionName, functionStatements);
+        this.functionParameters.put(functionName, parameterNames);
+
     }
 
-    /** Returns the list of parameter names associated with the specified function name. */
+    /**
+     * Returns the list of parameter names associated with the specified function name.
+     */
     public List<String> getParameterNames(String functionName) {
-        // TODO: Implement.
-        return null;
+        return this.functionParameters.get(functionName);
     }
 
-    /** Returns the list of function statements associated with the specified function name. */
+    /**
+     * Returns the list of function statements associated with the specified function name.
+     */
     public List<Statement> getFunctionStatements(String functionName) {
-        // TODO: Implement.
-        return null;
+        return this.functionStatements.get(functionName);
     }
 
-    /** Returns whether or not a return value has been recorded. */
+    /**
+     * Returns whether or not a return value has been recorded.
+     */
     public boolean hasReturnValue() {
-        // TODO: Implement.
-        return false;
+        return this.returnValueBoolean;
     }
 
-    /** Returns the recorded return value, if it exists. */
+    /**
+     * Returns the recorded return value, if it exists.
+     */
     public int getReturnValue() {
-        // TODO: Implement.
-        return 0;
+        return this.tempReturnValue;
     }
 
-    /** Records a return value. hasReturnValue should return true after this method is called. */
+    /**
+     * Records a return value. hasReturnValue should return true after this method is called.
+     */
     public void setReturnValue(int returnValue) {
-        // TODO: Implement.
+        this.returnValueBoolean = true;
+        this.tempReturnValue = returnValue;
     }
 
-    /** Clears the recorded return value. hasReturnValue should return false after this method is called. */
+    /**
+     * Clears the recorded return value. hasReturnValue should return false after this method is called.
+     */
     public void clearReturnValue() {
-        // TODO: Implement.
+        this.returnValueBoolean = false;
+
     }
 }

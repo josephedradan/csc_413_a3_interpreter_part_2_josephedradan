@@ -1,0 +1,14 @@
+# Testing if your code executes code after your return statement has been called
+
+i = 111
+
+def test():
+    for i in range(0, 10):
+        print(i)
+        return i
+        print(999)
+        i = 333
+    print(222)
+
+print(i)
+print(test())

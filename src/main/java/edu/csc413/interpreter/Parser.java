@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 /**
  * The Parser class is used to convert information that Interpreter pulls from the program lines into actual Statement,
  * Expression, and Condition objects. You will need to implement all of the methods marked by TODO.
- *
+ * <p>
  * You will find it useful to call parseExpression and parseCondition in your implementation. Both of these are already
  * complete and don't need to be modified, though they do rely on your createConstantExpression, etc. methods being
  * implemented.
@@ -61,8 +61,7 @@ public class Parser {
     }
 
     public Statement createWhileStatement(String conditionAsString, List<Statement> bodyStatements) {
-        // TODO: Implement.
-        return null;
+        return new WhileStatement(parseCondition(conditionAsString), bodyStatements);
     }
 
     public Statement createForStatement(
@@ -70,27 +69,32 @@ public class Parser {
             String rangeStartAsString,
             String rangeEndAsString,
             List<Statement> bodyStatements) {
-        // TODO: Implement.
-        return null;
+
+        Expression expressionRangeStart = parseExpression(rangeStartAsString);
+        Expression expressionRangeEnd = parseExpression(rangeEndAsString);
+
+        return new ForStatement(loopVariableName, expressionRangeStart, expressionRangeEnd, bodyStatements);
     }
 
     public Statement createDefineFunctionStatement(
             String functionName, List<String> parameterNames, List<Statement> functionStatements) {
-        // TODO: Implement.
-        return null;
+
+        return new DefineFunctionStatement(functionName, functionStatements, parameterNames);
     }
 
     public Statement createReturnStatement(String expressionAsString) {
-        // TODO: Implement.
-        return null;
+        return new ReturnStatement(parseExpression(expressionAsString));
     }
 
     public Expression createFunctionCallExpression(String functionName, List<String> parameterValuesAsStrings) {
-        // TODO: Implement.
-        return null;
+        List<Expression> expressionsPseudoArguments = parameterValuesAsStrings.stream().map(this::parseExpression).collect(Collectors.toList());
+
+        return new FunctionCallExpression(functionName, expressionsPseudoArguments);
     }
 
-    /** Converts a String representing an expression into an Expression object, based on the pattern detected. */
+    /**
+     * Converts a String representing an expression into an Expression object, based on the pattern detected.
+     */
     private Expression parseExpression(String expressionAsString) {
         if (expressionAsString.matches(CONSTANT_PATTERN.pattern())) {
             return createConstantExpression(Integer.parseInt(expressionAsString));
@@ -129,9 +133,11 @@ public class Parser {
         throw new RuntimeException("Unrecognized expression: " + expressionAsString);
     }
 
-    /** Converts a String representing a boolean condition into a Condition object, based on the pattern detected. */
+    /**
+     * Converts a String representing a boolean condition into a Condition object, based on the pattern detected.
+     */
     private Condition parseCondition(String conditionAsString) {
-        for (String operator: CONDITION_OPERATORS) {
+        for (String operator : CONDITION_OPERATORS) {
             Matcher matcher = Pattern.compile(String.format("^(.+)%s(.+)$", operator)).matcher(conditionAsString);
             if (matcher.matches()) {
                 return createCondition(operator, matcher.group(1).trim(), matcher.group(2).trim());
