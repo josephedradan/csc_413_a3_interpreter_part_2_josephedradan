@@ -148,6 +148,11 @@ if __name__ == '__main__':
     autorun()
 
 r"""
+Running file: advance-for-statement-iteration-return.txt
+Python 3.8.4:                      ['111', '0', '0']
+Java Pseudo Python Interpreter:    ['111', '0', '0']
+Correct
+
 Running file: arithmetic.txt
 Python 3.8.4:                      ['3', '9', '21']
 Java Pseudo Python Interpreter:    ['3', '9', '21']
@@ -218,6 +223,5 @@ Python 3.8.4:                      ['0', '1', '2', '3', '4', '5', '6', '7', '8',
 Java Pseudo Python Interpreter:    ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
 Correct
 
-11 out of 14 Correct relative to Python 3.8.4
-
+12 out of 15 Correct relative to Python 3.8.4
 """
