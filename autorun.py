@@ -107,11 +107,11 @@ def autorun():
         # Execute each file
         for file in files:
             # Get abs file path of program to execute (the txt file)
-            file_abs = os.path.join(dir_current, file)
+            path_file_abs = os.path.join(dir_current, file)
 
-            # CMD EXECUTION (WINDOWS ONLY)
-            command_java_execution = "cd {} && java {} {}".format(FOLDER_START, TARGET, file_abs)
-            command_python_execution = "python \"{}\"".format(file_abs)
+            # CMD EXECUTION, NOT POWERSHELL (WINDOWS ONLY)
+            command_java_execution = "cd {} && java {} {}".format(FOLDER_START, TARGET, path_file_abs)
+            command_python_execution = "python \"{}\"".format(path_file_abs)
 
             print("Running file: {}".format(file))
             # os.system(command_java_execution)
