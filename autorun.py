@@ -22,6 +22,8 @@ Notes:
     Assumes that you have already compiled the java files
     Assumes that you are using Windows
     Assumes that you have no unnecessary prints in your java files (This script compares terminal outputs)
+    Assumes that the location of Interpreter.class is
+        CURRENT_WORKING_DIR_OF_THIS_SCRIPT/out/production/interpreter/edu/csc413/interpreter/Interpreter.class
 
     Recommend that the Java Pseudo Python Interpreter support // for int division so that the Python Interpreter and the
     Java Pseudo Python Interpreter match outputs.
