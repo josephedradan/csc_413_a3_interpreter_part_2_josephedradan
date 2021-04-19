@@ -18,9 +18,7 @@ public class IfStatement extends ConditionalStatement {
     @Override
     public void run(ProgramState programState) {
         if (this.getCondition().evaluate(programState)) {
-            for (Statement statement : this.getBodyStatements()) {
-                statement.run(programState);
-            }
+            executeStatements(programState);
         }
     }
 }
